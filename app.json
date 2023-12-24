@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.madsonmms.todobeforeidie"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "544d758c-6438-45f2-a80d-7f0bd1ad0ff7"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "owner": "madsonmms"
   }
 }
