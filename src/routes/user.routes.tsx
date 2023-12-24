@@ -4,9 +4,25 @@ import { FriendsScreen } from "../screens/friends/Friends";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ItemRoutes } from "./item.routes";
 import RulesScreen from "../screens/rules/Rules";
-import { ProfileRoutes } from "./profile.routes";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { DrawerActions } from "@react-navigation/native";
 
 const { Screen, Navigator } = createBottomTabNavigator()
+
+const Drawer = createDrawerNavigator();
+
+export function ProfileRoutes() {
+    return (
+        <Drawer.Navigator initialRouteName="UserRoutes" screenOptions={{headerShown: false}}>
+                <Drawer.Screen name="drawer" component={UserRoutes} options={{
+                    drawerItemStyle: {display: "none"}
+                }}
+                />
+                <Drawer.Screen name="ItemList" component={UserRoutes} 
+                />
+        </Drawer.Navigator>
+    )
+}
 
 export function UserRoutes() {
     return (
@@ -32,13 +48,22 @@ export function UserRoutes() {
                     )
                 }}
                 />
-                <Screen name="Profile" component={ProfileRoutes} 
+                <Screen name="Profile" component={ItemRoutes} 
                 options={{
                     tabBarIcon: ({size, color})=>(
                         <MaterialCommunityIcons name="home" size={size} color={color} />
                     )
                 }}
+                listeners={({ navigation }) => ({
+                    tabPress: e => {            
+                      e.preventDefault()
+                      navigation.openDrawer()
+                    }
+                  })}
+                  
                 />
         </Navigator>
     )
 }
+
+
