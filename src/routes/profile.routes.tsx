@@ -1,15 +1,17 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { FriendsScreen } from "../screens/friends/Friends";
 
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ProfileInfoScreen from "../screens/profile-options/ProfileInfo";
 
-const { Screen, Navigator } = createDrawerNavigator()
+const { Screen, Navigator } = createNativeStackNavigator();
 
-export function ProfileRoutes() {
+export function ProfileRoute() {
     return (
-        <Navigator screenOptions={{headerShown: false}}>
-                
-                <Screen name="Friends" component={FriendsScreen} 
+            <Navigator initialRouteName="ProfileInfo" screenOptions={{headerShown: false}}>
+                <Screen
+                    name="ProfileInfo"
+                    component={ProfileInfoScreen}
                 />
-        </Navigator>
-    )
+            </Navigator>
+
+    );
 }
