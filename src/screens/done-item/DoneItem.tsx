@@ -7,6 +7,7 @@ import { PrivacyComponent } from "../../components/shared/ItemPrivacy";
 import { LikeComponent } from "../../components/shared/Likes";
 import { InputComponent } from "../../components/shared/Input";
 import { FontsLoad, font } from "../../components/shared/styles/Fonts";
+import { ScrollView } from "react-native-gesture-handler";
 
 type ParamsProps = {
     id: number;
@@ -33,6 +34,8 @@ export function DoneItem() {
 
     return (
         <View style={styles.container}>
+            <ScrollView>
+
             <View style={styles.doneItem}>
                 <View style={styles.likes}>
                     <LikeComponent likes={'10'}></LikeComponent>
@@ -41,7 +44,7 @@ export function DoneItem() {
                     <PrivacyComponent privacy={'public'}></PrivacyComponent>
                 </View>
                 <View style={styles.screenHeader}>
-                    <Text>Concluir item</Text>
+                    <Text style={font.shantallSamsSemiBold}>Concluir item</Text>
                 </View>
                 <View style={styles.itemTypes}>
                     <ItemIconsComponent name={'travel'}></ItemIconsComponent>
@@ -57,10 +60,6 @@ export function DoneItem() {
                         <View style={styles.date}>
                             <FontAwesome5 name="pencil-alt" size={15} color="#455059" />
                             <Text style={[font.sahityaBold, styles.datesInfo]}> Criado: <Text style={font.shantallSamsLight}>10-10-2023</Text></Text>
-                        </View>
-                        <View style={styles.date}>
-                            <FontAwesome5 name="pencil-alt" size={15} color="#455059" />
-                            <Text style={[font.sahityaBold, styles.datesInfo]}> Concluído: <Text style={font.shantallSamsLight}>10-10-2023</Text></Text>
                         </View>
                     </View>
                 </View>
@@ -87,10 +86,11 @@ export function DoneItem() {
                     </View>
                 </View>
                 <View style={styles.itemOptions}>
-                    <ButtonComponent title={'Concluir!'} navigate={navToDone}></ButtonComponent>
+                    <ButtonComponent title={'Próximo'} navigate={navToDone}></ButtonComponent>
                     <ButtonComponent title={'Voltar'} type={'secondary'} navigate={navToBack}></ButtonComponent>
                 </View>
             </View>
+            </ScrollView>
         </View>
     )
 }
@@ -98,6 +98,7 @@ export function DoneItem() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingVertical: 50,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: "#FCFBF5",
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         shadowOffset: { width: 4, height: 4 },
         elevation: 4,
-        gap: 15
+        gap: 40
     },
     itemOptions: {
         alignItems: 'center',

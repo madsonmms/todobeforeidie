@@ -1,7 +1,7 @@
 import { useFonts } from "expo-font";
 import { StyleSheet, Text } from "react-native";3
 
-export async function FontsLoad() {
+export function FontsLoad() {
 
     const [fontsLoaded] = useFonts({
         'HarimauDua': require('../../../assets/fonts/DK-Harimau-Dua.otf'),
