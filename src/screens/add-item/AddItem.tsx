@@ -16,12 +16,8 @@ export function SelectedItemScreen() {
     const navigation = useNavigation();
 
     function navToBack() {
-        navigation.goBack()
-    }
-
-    function navToDone() {
-        navigation.navigate('DoneItem', {id: id})
-    }
+      navigation.goBack()
+  }
 
     const route = useRoute();
     const { id } = route.params as ParamsProps;
@@ -67,14 +63,14 @@ export function SelectedItemScreen() {
                     </View>
                 </View>
                 <View style={styles.author}>
-                    <Image style={styles.authorImage} source={require('../../assets/png/10.png')} />
-                    <View style={styles.authorName}>
+                        <Image style={styles.authorImage} source={require('../../assets/png/10.png')} />
+                        <View style={styles.authorName}>
                         <Text style={font.sahityaBold}>Item por:</Text>
                         <Text style={font.shantallSamsLight}>Madson Martins</Text>
+                        </View>
                     </View>
-                </View>
                 <View style={styles.itemOptions}>
-                    <ButtonComponent title={'Concluir!'} navigate={navToDone}></ButtonComponent>
+                    <ButtonComponent title={'Concluir!'}></ButtonComponent>
                     <ButtonComponent title={'Voltar'} type={'secondary'} navigate={navToBack}></ButtonComponent>
                 </View>
             </View>
@@ -96,7 +92,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: "#FCFBF5",
     },
     selectedItem: {
         width: 372,

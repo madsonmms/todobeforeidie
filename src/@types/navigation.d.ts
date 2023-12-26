@@ -9,6 +9,10 @@ export declare global {
             SelectedItem: {
                 id: number
             }
+            DoneItem: {
+                id: number
+            }
+            
         }
     }
 }

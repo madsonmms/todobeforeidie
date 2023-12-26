@@ -1,17 +1,20 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useFonts } from "expo-font";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ButtonComponent } from "../../components/shared/Button";
 import { ItemIconsComponent } from "../../components/shared/ItemIcons";
 import { PrivacyComponent } from "../../components/shared/ItemPrivacy";
 import { LikeComponent } from "../../components/shared/Likes";
+import { InputComponent } from "../../components/shared/Input";
+import { FontsLoad, font } from "../../components/shared/styles/Fonts";
 
 type ParamsProps = {
     id: number;
 }
 
-export function SelectedItemScreen() {
+export function DoneItem() {
+
+    FontsLoad();
 
     const navigation = useNavigation();
 
@@ -20,30 +23,25 @@ export function SelectedItemScreen() {
     }
 
     function navToDone() {
-        navigation.navigate('DoneItem', {id: id})
+        navigation.navigate('DoneItem')
     }
 
     const route = useRoute();
     const { id } = route.params as ParamsProps;
 
-    const [fontsLoaded] = useFonts({
-        'HarimauDua': require('../../assets/fonts/DK-Harimau-Dua.otf'),
-        'ShantellSans-Light': require('../../assets/fonts/ShantellSans-Light.ttf'),
-        'Sahitya-Bold': require('../../assets/fonts/Sahitya-Bold.ttf')
-    });
-
-    if (!fontsLoaded) {
-        return <Text>Carregando...</Text>
-    }
+    
 
     return (
         <View style={styles.container}>
-            <View style={styles.selectedItem}>
+            <View style={styles.doneItem}>
                 <View style={styles.likes}>
                     <LikeComponent likes={'10'}></LikeComponent>
                 </View>
                 <View style={styles.itemPrivacy}>
                     <PrivacyComponent privacy={'public'}></PrivacyComponent>
+                </View>
+                <View style={styles.screenHeader}>
+                    <Text>Concluir item</Text>
                 </View>
                 <View style={styles.itemTypes}>
                     <ItemIconsComponent name={'travel'}></ItemIconsComponent>
@@ -66,6 +64,21 @@ export function SelectedItemScreen() {
                         </View>
                     </View>
                 </View>
+                <View style={styles.messageWrap}>
+                    <Text style={[font.shantallSamsRegular, {textAlign: 'center', width: 226}]}>
+                        Parabéns por concluir mais um item da sua lista =D
+                    </Text>
+                </View>
+                <View>
+                <View style={styles.messageWrap}>
+                    <Text style={[font.shantallSamsRegular, {textAlign: 'center', width: 'auto'}]}>
+                        Se quiser fale mais sobre sua experiência!
+                    </Text>
+                </View>
+                <View style={styles.form}>
+                    <InputComponent title={'Comentário'} placeholder={'Ex. Viagem para Londres e vi o Big Bang com meus próprios olhos!'}></InputComponent>
+                </View>
+                </View>
                 <View style={styles.author}>
                     <Image style={styles.authorImage} source={require('../../assets/png/10.png')} />
                     <View style={styles.authorName}>
@@ -82,15 +95,6 @@ export function SelectedItemScreen() {
     )
 }
 
-const font = StyleSheet.create({
-    shantallSamsLight: {
-        fontFamily: 'ShantellSans-Light'
-    },
-    sahityaBold: {
-        fontFamily: 'Sahitya-Bold'
-    }
-})
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -98,7 +102,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: "#FCFBF5",
     },
-    selectedItem: {
+    screenHeader: {
+        alignItems: 'center',
+    },
+    messageWrap: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    form: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    doneItem: {
         width: 372,
         height: 'auto',
         paddingVertical: 20,
