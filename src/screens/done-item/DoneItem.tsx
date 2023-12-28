@@ -6,90 +6,105 @@ import { ItemIconsComponent } from "../../components/shared/ItemIcons";
 import { PrivacyComponent } from "../../components/shared/ItemPrivacy";
 import { LikeComponent } from "../../components/shared/Likes";
 import { InputComponent } from "../../components/shared/Input";
-import { FontsLoad, font } from "../../components/shared/styles/Fonts";
+import * as Fonts from '../../components/shared/fonts/Fonts';
 import { ScrollView } from "react-native-gesture-handler";
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from "expo-font";
+import { useCallback } from "react";
 
 type ParamsProps = {
     id: number;
 }
 
+SplashScreen.preventAutoHideAsync();
+
+
 export function DoneItem() {
 
-    FontsLoad();
-
+    //navigation
     const navigation = useNavigation();
 
     function navToBack() {
         navigation.goBack()
     }
-
     function navToDone() {
         navigation.navigate('DoneItem')
     }
 
+    //routes
     const route = useRoute();
     const { id } = route.params as ParamsProps;
 
-    
+    //fonts
+    const [fontsLoaded, fontError] = useFonts(Fonts.FontList);
+
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded || fontError) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded, fontError]);
+
+    if (!fontsLoaded && !fontError) {
+        return <Text>Carregando...</Text>;
+    }
+
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={onLayoutRootView}>
             <ScrollView>
 
-            <View style={styles.doneItem}>
-                <View style={styles.likes}>
-                    <LikeComponent likes={'10'}></LikeComponent>
-                </View>
-                <View style={styles.itemPrivacy}>
-                    <PrivacyComponent privacy={'public'}></PrivacyComponent>
-                </View>
-                <View style={styles.screenHeader}>
-                    <Text style={font.shantallSamsSemiBold}>Concluir item</Text>
-                </View>
-                <View style={styles.itemTypes}>
-                    <ItemIconsComponent name={'travel'}></ItemIconsComponent>
-                    <ItemIconsComponent name={'fun'}></ItemIconsComponent>
-                </View>
-                <View style={styles.itemInfo}>
-                    <Text style={font.sahityaBold}>{id}-</Text><Text style={[font.shantallSamsLight, styles.itemTitle, styles.concluded]}>
-                        Fazer uma grande viagem
-                    </Text>
-                </View>
-                <View style={styles.itemDatesWrap}>
-                    <View style={styles.itemDates}>
-                        <View style={styles.date}>
-                            <FontAwesome5 name="pencil-alt" size={15} color="#455059" />
-                            <Text style={[font.sahityaBold, styles.datesInfo]}> Criado: <Text style={font.shantallSamsLight}>10-10-2023</Text></Text>
+                <View style={styles.doneItem}>
+                    <View style={styles.likes}>
+                        <LikeComponent likes={'10'}></LikeComponent>
+                    </View>
+                    <View style={styles.itemPrivacy}>
+                        <PrivacyComponent privacy={'public'}></PrivacyComponent>
+                    </View>
+                    <View style={styles.screenHeader}>
+                        <Text style={{fontFamily: Fonts.ShantallSamsFamily.Bold}}>Concluir item</Text>
+                    </View>
+                    <View style={styles.itemTypes}>
+                        <ItemIconsComponent name={'travel'}></ItemIconsComponent>
+                        <ItemIconsComponent name={'fun'}></ItemIconsComponent>
+                    </View>
+                    <View style={styles.itemInfo}>
+                        <Text style={{fontFamily: Fonts.SahityaFamily.Bold}}>{id}-</Text><Text style={[{fontFamily: Fonts.ShantallSamsFamily.Regular}, styles.itemTitle, styles.concluded]}>
+                            Fazer uma grande viagem
+                        </Text>
+                    </View>
+                        <View style={styles.itemDates}>
+                            <View style={styles.date}>
+                                <FontAwesome5 name="pencil-alt" size={15} color="#455059" />
+                                <Text style={[{fontFamily: Fonts.SahityaFamily.Bold}, styles.datesInfo]}> Criado: <Text style={{fontFamily: Fonts.ShantallSamsFamily.Light}}>10-10-2023</Text></Text>
+                            </View>
+                        </View>
+                    <View style={styles.messageWrap}>
+                        <Text style={[{fontFamily: Fonts.ShantallSamsFamily.Regular}, { textAlign: 'center', width: 226 }]}>
+                            Parabéns por concluir mais um item da sua lista =D
+                        </Text>
+                    </View>
+                    <View>
+                        <View style={styles.messageWrap}>
+                            <Text style={[{fontFamily: Fonts.ShantallSamsFamily.Regular}, { textAlign: 'center', width: 'auto' }]}>
+                                Se quiser fale mais sobre sua experiência!
+                            </Text>
+                        </View>
+                        <View style={styles.form}>
+                            <InputComponent title={'Comentário'} placeholder={'Ex. Viagem para Londres e vi o Big Bang com meus próprios olhos!'}></InputComponent>
                         </View>
                     </View>
-                </View>
-                <View style={styles.messageWrap}>
-                    <Text style={[font.shantallSamsRegular, {textAlign: 'center', width: 226}]}>
-                        Parabéns por concluir mais um item da sua lista =D
-                    </Text>
-                </View>
-                <View>
-                <View style={styles.messageWrap}>
-                    <Text style={[font.shantallSamsRegular, {textAlign: 'center', width: 'auto'}]}>
-                        Se quiser fale mais sobre sua experiência!
-                    </Text>
-                </View>
-                <View style={styles.form}>
-                    <InputComponent title={'Comentário'} placeholder={'Ex. Viagem para Londres e vi o Big Bang com meus próprios olhos!'}></InputComponent>
-                </View>
-                </View>
-                <View style={styles.author}>
-                    <Image style={styles.authorImage} source={require('../../assets/png/10.png')} />
-                    <View style={styles.authorName}>
-                        <Text style={font.sahityaBold}>Item por:</Text>
-                        <Text style={font.shantallSamsLight}>Madson Martins</Text>
+                    <View style={styles.author}>
+                        <Image style={styles.authorImage} source={require('../../assets/png/10.png')} />
+                        <View style={styles.authorName}>
+                            <Text style={{fontFamily: Fonts.SahityaFamily.Bold}}>Item por:</Text>
+                            <Text style={{fontFamily: Fonts.ShantallSamsFamily.Light}}>Madson Martins</Text>
+                        </View>
+                    </View>
+                    <View style={styles.itemOptions}>
+                        <ButtonComponent title={'Próximo'} navigate={navToDone}></ButtonComponent>
+                        <ButtonComponent title={'Voltar'} type={'secondary'} navigate={navToBack}></ButtonComponent>
                     </View>
                 </View>
-                <View style={styles.itemOptions}>
-                    <ButtonComponent title={'Próximo'} navigate={navToDone}></ButtonComponent>
-                    <ButtonComponent title={'Voltar'} type={'secondary'} navigate={navToBack}></ButtonComponent>
-                </View>
-            </View>
             </ScrollView>
         </View>
     )
@@ -158,13 +173,10 @@ const styles = StyleSheet.create({
         top: 7,
         right: 10,
     },
-    itemDatesWrap: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 30,
-    },
     itemDates: {
-        paddingVertical: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingHorizontal: 30,
         gap: 10
     },
     date: {

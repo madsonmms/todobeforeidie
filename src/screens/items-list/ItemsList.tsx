@@ -1,9 +1,23 @@
+//default
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { ListItemComponent } from "../../components/list-item/ListItem";
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useFonts } from "expo-font";
 import { FlatList } from "react-native-gesture-handler";
 
+//components
+import { ListItemComponent } from "../../components/list-item/ListItem";
+
+//icons
+import { FontAwesome5 } from '@expo/vector-icons';
+
+//fonts
+import { useFonts } from "expo-font";
+import * as Fonts from '../../components/shared/fonts/Fonts'
+import { useCallback } from "react";
+
+//SplashScreen
+import * as SplashScreen from 'expo-splash-screen'
+
+
+//To Flatlist
 type ItemData =
     {
         itemPublic: true | false,
@@ -84,28 +98,32 @@ const Item = ({ item }: itemProps) => {
             concluded={item.concluded}
         />
     )
-
-
 }
 
+//Screen
 export function ItemsListScreen() {
 
-    const [fontsLoaded] = useFonts({
-        'HarimauDua': require('../../assets/fonts/DK-Harimau-Dua.otf'),
-        'ShantellSans-Light': require('../../assets/fonts/ShantellSans-Light.ttf'),
-        'Sahitya-Bold': require('../../assets/fonts/Sahitya-Bold.ttf')
-    });
+    //FontLoader
+    const [fontsLoaded, fontError] = useFonts(Fonts.FontList);
 
-    if (!fontsLoaded) {
-        return <Text>Carregando...</Text>
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded || fontError) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded, fontError]);
+
+    if (!fontsLoaded && !fontError) {
+        return <Text>Carregando...</Text>;
     }
 
+    //FlatList Render
     const renderItem = ({ item }: { item: ItemData }) => {
         return (
             <Item item={item}></Item>
         )
     }
 
+    //Render
     return (
         <View style={styles.container}>
             <View style={styles.options}>
@@ -142,60 +160,18 @@ export function ItemsListScreen() {
                     </View>
                     )
                 }
-                style={styles.itemListContainer}>
-                {/* <ListItemComponent
-                    itemPublic={true}
-                    index={1}
-                    title={'Fazer uma viagem grande'}
-                    createdDate='10-01-2023'
-                    concluded={false}
-                />
-                <ListItemComponent
-                    itemPublic={true}
-                    index={2}
-                    title={'Comer algo diferente'}
-                    createdDate="10-01-2023"
-                    concluded={false}
-                />
-                <ListItemComponent
-                    itemPublic={false}
-                    index={3}
-                    title={'Ir aos alpes suiços'}
-                    createdDate="10-01-2023"
-                    concluded={true}
-                />
-                <ListItemComponent
-                    itemPublic={false}
-                    index={4}
-                    title={'Ir aos alpes suiços'}
-                    createdDate="10-01-2023"
-                    concluded={true}
-                />
-                <ListItemComponent
-                    itemPublic={false}
-                    index={5}
-                    title={'Ir aos alpes suiços'}
-                    createdDate="10-01-2023"
-                    concluded={true}
-                /> */}
+                style={styles.itemListContainer}
+                onLayout={onLayoutRootView}>
             </FlatList>
             <TouchableOpacity style={styles.addButton}>
                 <FontAwesome5 name="plus" size={14} color='#455059' style={styles.addButtonIcon} />
-                <Text style={[font.shantallSamsLight, styles.addButtonText]}>Adicionar um item</Text>
+                <Text style={[{fontFamily: Fonts.ShantallSamsFamily.Light}, styles.addButtonText]}>Adicionar um item</Text>
             </TouchableOpacity>
         </View>
     )
 }
 
-const font = StyleSheet.create({
-    shantallSamsLight: {
-        fontFamily: 'ShantellSans-Light'
-    },
-    sahityaBold: {
-        fontFamily: 'Sahitya-Bold'
-    }
-})
-
+//LocalStyles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
