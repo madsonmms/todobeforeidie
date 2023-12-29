@@ -1,26 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 
-
-import { ButtonComponent } from '../../components/shared/Button';
-import { useNavigation } from '@react-navigation/native';
+import * as Fonts from "../../components/shared/fonts/Fonts"
 
 SplashScreen.preventAutoHideAsync();
 
-export default function HomeScreen() {
+export default function AccountInfoScreen() {
 
-  const navigation = useNavigation();
-
-  function navToUserRoutes() {
-    navigation.navigate('AuthenticatedRoute')
-}
-
-  const [fontsLoaded, fontError] = useFonts({
-    'HarimauDua': require('../../assets/fonts/DK-Harimau-Dua.otf')
-  });
+  const [fontsLoaded, fontError] = useFonts(Fonts.FontList);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
@@ -34,19 +24,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text style={styles.title}>To Do Before I Die</Text>
-      <View style={styles.buttonsContainer}>
-
-        <ButtonComponent
-          title={'Acessar conta'} 
-          navigate={navToUserRoutes}
-          />
-
-        <ButtonComponent
-          title={'Criar nova conta'} 
-          />
-
-      </View>
+      <Text style={styles.title}>Regras</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -67,7 +45,4 @@ const styles = StyleSheet.create({
     fontSize: 48,
     textAlign: 'center',
   },
-  buttonsContainer: {
-    gap: 20,
-  }
 });

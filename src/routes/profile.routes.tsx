@@ -6,12 +6,11 @@ const { Screen, Navigator } = createNativeStackNavigator();
 
 export function ProfileRoute() {
     return (
-            <Navigator initialRouteName="ProfileInfo" screenOptions={{headerShown: false}}>
+            <Navigator screenOptions={{headerShown: false}}>
                 <Screen
                     name="ProfileInfo"
                     component={ProfileInfoScreen}
                 />
             </Navigator>
-
     );
 }

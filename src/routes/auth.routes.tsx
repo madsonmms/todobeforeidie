@@ -1,8 +1,7 @@
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/home/Home";
-import { AppMainRoute } from "./app-main.routes";
-import { UserRoutes } from "./user.routes";
+import { AuthenticatedRoute } from "./authenticated.routes";
 
 const { Screen, Navigator } = createNativeStackNavigator();
 
@@ -14,8 +13,8 @@ export function AuthRoutes() {
                     component={HomeScreen}
                 />
                 <Screen
-                    name="UserRoutes"
-                    component={AppMainRoute}
+                    name="AuthenticatedRoute"
+                    component={AuthenticatedRoute}
                 />
             </Navigator>
 

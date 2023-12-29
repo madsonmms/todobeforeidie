@@ -2,7 +2,7 @@ export declare global {
     namespace ReactNavigation {
         interface RootParamList {
             Home: undefined;
-            UserRoutes: undefined;
+            AuthenticatedRoute: undefined;
             Friends: undefined;
             Rules: undefined;
             Profile: undefined;
