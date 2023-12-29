@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FriendsScreen } from "../screens/friends/Friends";
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { ItemRoutes } from "./item.routes";
+import { ItemRoutes } from "./item-routes/item.routes";
 import RulesScreen from "../screens/rules/Rules";
 
 

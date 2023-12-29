@@ -1,3 +1,4 @@
+import { NonUndefined } from './../../node_modules/react-hook-form/dist/types/utils.d';
 export declare global {
     namespace ReactNavigation {
         interface RootParamList {
@@ -7,12 +8,19 @@ export declare global {
             Friends: undefined;
             Rules: undefined;
             Profile: undefined;
-            SelectedItem: {
-                id: number
+            SelectedItem: {id:number}
+            CompleteItem: {
+                screen: string,
+                params: {
+                    id: number
+                }
             }
-            DoneItem: {
+            CompletedItemInfo: {
                 id: number
-            }
+            },
+            StepOne: {
+                id: number
+            },
             
         }
     }

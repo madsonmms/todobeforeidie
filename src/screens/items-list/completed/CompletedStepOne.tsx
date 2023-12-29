@@ -1,16 +1,17 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ButtonComponent } from "../../components/shared/Button";
-import { ItemIconsComponent } from "../../components/shared/ItemIcons";
-import { PrivacyComponent } from "../../components/shared/ItemPrivacy";
-import { LikeComponent } from "../../components/shared/Likes";
-import { InputComponent } from "../../components/shared/Input";
-import * as Fonts from '../../components/shared/fonts/Fonts';
+import { ButtonComponent } from "../../../components/shared/Button";
+import { ItemIconsComponent } from "../../../components/shared/ItemIcons";
+import { PrivacyComponent } from "../../../components/shared/ItemPrivacy";
+import { LikeComponent } from "../../../components/shared/Likes";
+import { InputComponent } from "../../../components/shared/Input";
+import * as Fonts from '../../../components/shared/fonts/Fonts';
 import { ScrollView } from "react-native-gesture-handler";
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from "expo-font";
 import { useCallback } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type ParamsProps = {
     id: number;
@@ -19,7 +20,7 @@ type ParamsProps = {
 SplashScreen.preventAutoHideAsync();
 
 
-export function DoneItem() {
+export function CompletedFormStepOne(props) {
 
     //navigation
     const navigation = useNavigation();
@@ -28,12 +29,11 @@ export function DoneItem() {
         navigation.goBack()
     }
     function navToDone() {
-        navigation.navigate('DoneItem')
+        navigation.navigate('StepOne')
     }
 
     //routes
-    const route = useRoute();
-    const { id } = route.params as ParamsProps;
+    const { id } = props.route.params as ParamsProps;
 
     //fonts
     const [fontsLoaded, fontError] = useFonts(Fonts.FontList);
@@ -50,10 +50,9 @@ export function DoneItem() {
 
 
     return (
-        <View style={styles.container} onLayout={onLayoutRootView}>
+        <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
             <ScrollView>
-
-                <View style={styles.doneItem}>
+                <View style={styles.completedItem}>
                     <View style={styles.likes}>
                         <LikeComponent likes={'10'}></LikeComponent>
                     </View>
@@ -72,18 +71,6 @@ export function DoneItem() {
                             Fazer uma grande viagem
                         </Text>
                     </View>
-                        <View style={styles.itemDates}>
-                            <View style={styles.date}>
-                                <FontAwesome5 name="pencil-alt" size={15} color="#455059" />
-                                <Text style={[{fontFamily: Fonts.SahityaFamily.Bold}, styles.datesInfo]}> Criado: <Text style={{fontFamily: Fonts.ShantallSamsFamily.Light}}>10-10-2023</Text></Text>
-                            </View>
-                        </View>
-                    <View style={styles.messageWrap}>
-                        <Text style={[{fontFamily: Fonts.ShantallSamsFamily.Regular}, { textAlign: 'center', width: 226 }]}>
-                            Parabéns por concluir mais um item da sua lista =D
-                        </Text>
-                    </View>
-                    <View>
                         <View style={styles.messageWrap}>
                             <Text style={[{fontFamily: Fonts.ShantallSamsFamily.Regular}, { textAlign: 'center', width: 'auto' }]}>
                                 Se quiser fale mais sobre sua experiência!
@@ -92,21 +79,13 @@ export function DoneItem() {
                         <View style={styles.form}>
                             <InputComponent title={'Comentário'} placeholder={'Ex. Viagem para Londres e vi o Big Bang com meus próprios olhos!'}></InputComponent>
                         </View>
-                    </View>
-                    <View style={styles.author}>
-                        <Image style={styles.authorImage} source={require('../../assets/png/10.png')} />
-                        <View style={styles.authorName}>
-                            <Text style={{fontFamily: Fonts.SahityaFamily.Bold}}>Item por:</Text>
-                            <Text style={{fontFamily: Fonts.ShantallSamsFamily.Light}}>Madson Martins</Text>
-                        </View>
-                    </View>
                     <View style={styles.itemOptions}>
                         <ButtonComponent title={'Próximo'} navigate={navToDone}></ButtonComponent>
                         <ButtonComponent title={'Voltar'} type={'secondary'} navigate={navToBack}></ButtonComponent>
                     </View>
                 </View>
             </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -129,7 +108,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center'
     },
-    doneItem: {
+    completedItem: {
         width: 372,
         height: 'auto',
         paddingVertical: 20,

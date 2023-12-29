@@ -5,6 +5,7 @@ import { LikeComponent } from "../shared/Likes";
 import { PrivacyComponent } from "../shared/ItemPrivacy";
 import { ItemIconsComponent } from "../shared/ItemIcons";
 import { useNavigation } from "@react-navigation/native";
+import * as Fonts from '../../components/shared/fonts/Fonts';
 
 interface ListItemProps {
     itemPublic: boolean,
@@ -31,18 +32,16 @@ export function ListItemComponent({ index, itemPublic, title, createdDate, concl
         }
     }
     
-
     const navigation = useNavigation();
 
     function navToSelectedItem() {
-        navigation.navigate('SelectedItem', {id: index})
+        navigation.navigate('CompleteItem', {
+            screen: "SelectedItem",
+            params: {id: index}
+        })
     }
 
-    const [fontsLoaded] = useFonts({
-        'HarimauDua': require('../../assets/fonts/DK-Harimau-Dua.otf'),
-        'ShantellSans-Light': require('../../assets/fonts/ShantellSans-Light.ttf'),
-        'Sahitya-Bold': require('../../assets/fonts/Sahitya-Bold.ttf')
-    });
+    const [fontsLoaded] = useFonts(Fonts.FontList);
 
     if (!fontsLoaded) {
         return <Text>Carregando...</Text>

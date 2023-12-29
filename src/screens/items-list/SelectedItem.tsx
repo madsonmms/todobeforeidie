@@ -6,6 +6,9 @@ import { ButtonComponent } from "../../components/shared/Button";
 import { ItemIconsComponent } from "../../components/shared/ItemIcons";
 import { PrivacyComponent } from "../../components/shared/ItemPrivacy";
 import { LikeComponent } from "../../components/shared/Likes";
+import { useCallback } from "react";
+import * as Fonts from '../../components/shared/fonts/Fonts'
+import * as SplashScreen from 'expo-splash-screen'
 
 type ParamsProps = {
     id: number;
@@ -13,31 +16,34 @@ type ParamsProps = {
 
 export function SelectedItemScreen() {
 
+    const route = useRoute();
+    const { id } = route.params as ParamsProps;
+
     const navigation = useNavigation();
 
     function navToBack() {
         navigation.goBack()
     }
 
-    function navToDone() {
-        navigation.navigate('DoneItem', {id: id})
+    function navToCompleted() {
+        navigation.navigate('CompletedItemInfo', {id: id})
     }
 
-    const route = useRoute();
-    const { id } = route.params as ParamsProps;
+    //FontLoader
+    const [fontsLoaded, fontError] = useFonts(Fonts.FontList);
 
-    const [fontsLoaded] = useFonts({
-        'HarimauDua': require('../../assets/fonts/DK-Harimau-Dua.otf'),
-        'ShantellSans-Light': require('../../assets/fonts/ShantellSans-Light.ttf'),
-        'Sahitya-Bold': require('../../assets/fonts/Sahitya-Bold.ttf')
-    });
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded || fontError) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded, fontError]);
 
-    if (!fontsLoaded) {
-        return <Text>Carregando...</Text>
+    if (!fontsLoaded && !fontError) {
+        return <Text>Carregando...</Text>;
     }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={onLayoutRootView}>
             <View style={styles.selectedItem}>
                 <View style={styles.likes}>
                     <LikeComponent likes={'10'}></LikeComponent>
@@ -74,7 +80,7 @@ export function SelectedItemScreen() {
                     </View>
                 </View>
                 <View style={styles.itemOptions}>
-                    <ButtonComponent title={'Concluir!'} navigate={navToDone}></ButtonComponent>
+                    <ButtonComponent title={'Concluir!'} navigate={navToCompleted}></ButtonComponent>
                     <ButtonComponent title={'Voltar'} type={'secondary'} navigate={navToBack}></ButtonComponent>
                 </View>
             </View>
