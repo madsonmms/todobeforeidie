@@ -5,10 +5,13 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 
 import * as Fonts from "../../components/shared/fonts/Fonts"
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function AccountInfoScreen() {
+
+  const navigation = useNavigation()
 
   const [fontsLoaded, fontError] = useFonts(Fonts.FontList);
 
@@ -24,7 +27,10 @@ export default function AccountInfoScreen() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text style={styles.title}>Regras</Text>
+      <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+        <Text>Voltar</Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>Informações pessoais</Text>
       <StatusBar style="auto" />
     </View>
   );

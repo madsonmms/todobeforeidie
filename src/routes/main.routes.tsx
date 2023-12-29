@@ -5,18 +5,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ItemRoutes } from "./item.routes";
 import RulesScreen from "../screens/rules/Rules";
 
-import { TouchableOpacity, View } from "react-native";
-import { AccountStackRoutes } from "./account.routes";
+
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import AccountInfoScreen from "../screens/profile-options/AccountInfo";
+import ProfileInfoScreen from "../screens/profile-options/ProfileInfo";
 
 const { Screen, Navigator } = createBottomTabNavigator()
+const Drawer = createDrawerNavigator()
 
-const AvatarButtom = () => {
-    return <View />
-}
-
-export function MainAppRoutes({ navigation }) {
-
-    
+export function MainAppRoutes() {
 
     return (
         <>
@@ -54,7 +51,7 @@ export function MainAppRoutes({ navigation }) {
                         )
                     }}
                 />
-                <Screen name="AccountInfo" component={AccountStackRoutes}
+                <Screen name="Avatar" 
                     options={{
                         tabBarIcon: ({ size, color }) => (
                             <MaterialCommunityIcons name="home" size={size} color={color} />
@@ -67,15 +64,17 @@ export function MainAppRoutes({ navigation }) {
                             e.preventDefault()
                         }
                     })}
-                />
+                >
+                   {() => (
+                    <Drawer.Navigator>
+                        <Drawer.Screen name="Informações pessoais" component={AccountInfoScreen}>
+                        </Drawer.Screen>
+                        <Drawer.Screen name="Informações pessoais" component={ProfileInfoScreen}>
+                        </Drawer.Screen>
+                    </Drawer.Navigator>
+                   )}
+                </Screen>
             </Navigator>
-            {/* <TouchableOpacity
-                style={{ position: 'absolute', right: 45, bottom: 10 }}
-                onPress={
-                    () => navigation.openDrawer()
-                }>
-                <MaterialCommunityIcons name="home" size={30} color={'black'} />
-            </TouchableOpacity> */}
         </>
     )
 }

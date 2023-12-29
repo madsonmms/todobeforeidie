@@ -4,15 +4,22 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import * as Fonts from "../../components/shared/fonts/Fonts";
+
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { MainAppRoutes } from '../../routes/main.routes';
+
+import { DrawerActions } from '@react-navigation/native';
+
+
 
 SplashScreen.preventAutoHideAsync();
 
-export default function ProfileInfoScreen( {navigation}) {
+export default function ProfileInfoScreen() {
 
-  const [fontsLoaded, fontError] = useFonts({
-    'HarimauDua': require('../../assets/fonts/DK-Harimau-Dua.otf')
-  });
+  const navigation = useNavigation()
+
+  const [fontsLoaded, fontError] = useFonts(Fonts.FontList);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
@@ -26,9 +33,9 @@ export default function ProfileInfoScreen( {navigation}) {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-        <TouchableOpacity onPress={navigation.goBack()}>
-        <FontAwesome5 name="angle-left" size={24} color="black" />
-        </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+        <Text>Voltar</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>Regras</Text>
       <StatusBar style="auto" />
     </View>
